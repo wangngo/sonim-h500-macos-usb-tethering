@@ -1,0 +1,24 @@
+--- a/sbin/usb/compositions/1D9C_A011
++++ b/sbin/usb/compositions/1D9C_A011
+@@ -103,12 +103,11 @@
+ run_configfs() {
+ 	pkill adbd
+ 	cd /sys/kernel/config/usb_gadget/g1
++	echo "" > UDC 2> /dev/null
+ 	rm os_desc/c* 2> /dev/null
+ 	rm configs/c*/f* 2> /dev/null
+ 	rmdir configs/c.2/strings/* configs/c.3/strings/* 2> /dev/null
+ 	rmdir configs/c.2 configs/c.3 2> /dev/null
+-	#mkdir configs/c.2
+-	#mkdir configs/c.2/strings/0x409
+ 	echo 0x1D9C > idVendor
+ 	echo 0xA011 > idProduct
+ 	if [ -f /usrdata/data/usr/usb_sua -o -f /data/usb_sua ]; then
+@@ -120,6 +119,7 @@
+ 
+ 		echo 0xA0 > configs/c.1/bmAttributes
+ 	else
++	    mkdir -p configs/c.2/strings/0x409
+ 	    echo "RNDIS" > configs/c.1/strings/0x409/configuration
+ 	    echo "ECM" > configs/c.2/strings/0x409/configuration
+ 	    ln -s functions/gsi.rndis configs/c.1/f1
